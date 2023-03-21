@@ -1,22 +1,30 @@
 from setuptools import setup, find_packages
+import os
 
 VERSION = '0.1.0'
-DESCRIPTION = 'Insert String, Integer, Float or Dataframe into an XLSX file'
-LONG_DESCRIPTION = 'A package that allows to insert data in an XLSX file without changing the layout.'
+DESCRIPTION = 'A package that allows to insert data in an XLSX file without changing the layout.'
 
-# Setting up
+
+def read(fname):
+    with open(os.path.join(os.path.dirname(__file__), fname), 'r') as file:
+        return file.read()
+
+
 setup(
     name="in2xl",
     version=VERSION,
-    author="David Herzog",
+    url='https://github.com/gozred/python-in2xl',
+    license='MIT License',
+    author="Herzog(gozred)",
     description=DESCRIPTION,
     long_description_content_type="text/markdown",
-    long_description=LONG_DESCRIPTION,
+    long_description=read('README.rst'),
     packages=find_packages(),
+
     install_requires=['openpyxl', 'xlsxwriter', 'ruamel.std.zipfile', 'lxml', 'pandas'],
     keywords=['python', 'xlsx', 'excel', 'dataframe', 'insert in excel', 'template', 'excel template'],
     classifiers=[
-        "Development Status :: 1 - Planning",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3",
         "Operating System :: Unix",
@@ -24,4 +32,3 @@ setup(
         "Operating System :: Microsoft :: Windows",
     ]
 )
-
