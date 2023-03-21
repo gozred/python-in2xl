@@ -2,3 +2,4 @@ openpyxl
 xlsxwriter
 ruamel.std.zipfile
 lxml
+pandas
