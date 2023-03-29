@@ -1,3 +1,4 @@
+
 from setuptools import setup
 import os
 
@@ -8,7 +9,6 @@ DESCRIPTION = 'A package that allows to insert data in an XLSX file without chan
 def read(fname):
     with open(os.path.join(os.path.dirname(__file__), fname), 'r') as file:
         return file.read()
-
 
 setup(
     name="in2xl",
@@ -21,6 +21,7 @@ setup(
     long_description=read('README.rst'),
     package_dir={"in2xl": "src"},
     packages=['in2xl', 'in2xl.in2xl'],
+
 
     install_requires=['openpyxl', 'xlsxwriter', 'ruamel.std.zipfile', 'lxml', 'pandas'],
     keywords=['python', 'xlsx', 'excel', 'dataframe', 'insert in excel', 'template', 'excel template'],
