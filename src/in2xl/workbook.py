@@ -43,6 +43,14 @@ class Workbook:
         read_xlsx(self, path: str = None) -> Worksheets: Reads an Excel workbook from the specified file path and returns an instance of Worksheets.
 
     """
+    def __new__(cls, path=None):
+
+        if path is not None:
+            cls.__init__(cls)
+
+            return object.__new__(cls).read_xlsx(path)
+
+        return object.__new__(cls)
 
     def __init__(self):
 
