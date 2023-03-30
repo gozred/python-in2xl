@@ -84,7 +84,7 @@ Different types of data can be inserted directly via ``insert()``
     ws.insert(df,2,3, header=False)
 ..
 
-More detailed description of the function:
+More detailed description of this function:
 
 >>> insert(data, row=1, column=1, axis=0, header=True, index=False)
 
