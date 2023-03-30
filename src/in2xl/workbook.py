@@ -40,7 +40,7 @@ class Workbook:
     Methods:
         __init__(self): Initializes a new instance of the `Workbook` class.
         __worksheets(self): Extracts worksheet information from a given Excel file.
-        read_xlsx(self, path: str = None) -> Worksheets: Reads an Excel workbook from the specified file path and returns an instance of Worksheets.
+        load_workbook(self, path: str = None) -> Worksheets: Reads an Excel workbook from the specified file path and returns an instance of Worksheets.
 
     """
     def __new__(cls, path=None):
@@ -48,7 +48,7 @@ class Workbook:
         if path is not None:
             cls.__init__(cls)
 
-            return object.__new__(cls).read_xlsx(path)
+            return object.__new__(cls).load_workbook(path)
 
         return object.__new__(cls)
 
@@ -129,7 +129,7 @@ class Workbook:
 
         return wb_dict, wb_id_dict, wb, content, chart_dict, wb_state
 
-    def read_xlsx(self, path: str = None) -> Worksheets:
+    def load_workbook(self, path: str = None) -> Worksheets:
 
         """
         Reads an Excel workbook from the specified file path and returns an instance of Worksheets.
