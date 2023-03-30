@@ -2,7 +2,7 @@
 from setuptools import setup
 import os
 
-VERSION = '0.1.12'
+VERSION = '0.1.14'
 DESCRIPTION = 'A package that allows to insert data in an XLSX file without changing the layout.'
 
 
@@ -18,7 +18,7 @@ setup(
     author="Herzog(gozred)",
     description=DESCRIPTION,
     long_description_content_type="text/markdown",
-    long_description=read('README.rst'),
+    long_description=read('pypi.md'),
     package_dir={"in2xl": "src"},
     packages=['in2xl', 'in2xl.in2xl'],
 
