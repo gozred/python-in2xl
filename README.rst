@@ -49,6 +49,7 @@ It is not possible to create new workbooks using in2xl. The intended approach is
     from in2xl import Workbook
     
     wb = Workbook().load_workbook(path)
+    
 
 But this method is also possible:
 
@@ -67,10 +68,46 @@ Open a Worksheet
 ..  code-block:: python
  
     ws = wb[sheetname]
+    
+
+Additionally you can check the names of all worksheets
+
+..  code-block:: python
+
+    print(wb.sheetnames)
+
 
 Insert data
 """""""""""""
 
+Different types of data can be inserted directly via ``insert()``
+
+..  code-block:: python
+ 
+    ws.insert(df,2,3, header=False)
+..
+
+More detailed description of the function:
+
+>>> insert(data: Union(str, int, float, pd.DataFrame), row: int = 1, column: int = 1, axis: int = 0, header: bool = True, index: bool = False)
+
+
+ Parameters: 
+   **data:   Union(str, int, float, decimal, pd.DataFrame)**
+             Besides strings and real numbers, DataFrames can also be inserted directly.
+   **row:    int**
+             The row in which the data is to be inserted. The default is the first row.
+   **column: int**
+             The column in which the data is to be inserted. The default is the first column.
+   **axis:   int**
+             Specify whether the data is inserted in the original orientation or a transposed direction. Default is 0 
+             0 : If the data is in a vertical orientation, it will be inserted vertically. 
+             1 : If the data is in a vertical orientation, it will be inserted horizontally.
+   **header: bool**
+             True to include headers in the data, False otherwise. Default is **True**.
+   **index:  bool**
+             True to include index in the data, False otherwise. Defaults to **False**.  
+             
 
 Save & Close
 """""""""""""
@@ -80,12 +117,28 @@ Save & Close
     ws.save(path)
     ws.close()
 
+The file can be saved multiple times (under different names). As long as the file has not been closed, the temporary Excel file exists. The close command deletes this temporary file.
+
 
 Additional functions
 """""""""""""""""""""
 
+Template files are sometimes created for multiple tasks/situations. Not all worksheets are always necessary for this. To be able to use these files anyway, it is possible to hide these worksheets. 
+
+..  code-block:: python
+   
+   print(wb.wb_state) # Returns the visibility status of all worksheets
+   print(ws.state) # Returns the visibility status of the current worksheet
+   
+   ws.state = 0 # Sets the visibility status to visible
+   ws.state = 1 # Sets the visibility status to hidden. User can make this worksheet visible again out of Excel via "Unhide".
+   ws.state = 2 # Sets the visibility status to 'veryHidden'. User can't make this worksheet visible again out of Excel via "Unhide".
 
 Planned further functions
 """""""""""""""""""""
+
+* Insert Data into tables / update range of the tables
+* Refresh Data of a pivot table
+* delete worksheets
 
 
