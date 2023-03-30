@@ -27,3 +27,10 @@ Project dependencies installed by pip:
   xlsxwriter
 ::
 
+Usage
+*****************
+
+
+
+Open a Workbook
+""""""""""""""""
