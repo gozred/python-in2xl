@@ -1,9 +1,6 @@
 in2xl
 #########
 
- Readme.rst is still under construction
-
-
 About this project
 *******************************
 
