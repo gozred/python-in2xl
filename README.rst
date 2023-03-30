@@ -86,7 +86,7 @@ Different types of data can be inserted directly via ``insert()``
 
 More detailed description of the function:
 
->>> insert(data: Union(str, int, float, pd.DataFrame), row: int = 1, column: int = 1, axis: int = 0, header: bool = True, index: bool = False)
+>>> insert(data, row=1, column=1, axis=0, header=True, index=False)
 
 
  Parameters: 
@@ -127,9 +127,9 @@ Template files are sometimes created for multiple tasks/situations. Not all work
    print(wb.wb_state) # Returns the visibility status of all worksheets
    print(ws.state) # Returns the visibility status of the current worksheet
    
-   ws.state = 0 # Sets the visibility status to visible
-   ws.state = 1 # Sets the visibility status to hidden. User can make this worksheet visible again out of Excel via "Unhide".
-   ws.state = 2 # Sets the visibility status to 'veryHidden'. User can't make this worksheet visible again out of Excel via "Unhide".
+   ws.state = 0 # Sets the visibility status to 'visible'.
+   ws.state = 1 # Sets the visibility status to 'hidden'. User can make this worksheet visible again out of Excel via "Unhide".
+   ws.state = 2 # Sets the visibility status to 'veryHidden'. Worksheet is not visible under "Unhide" in Excel.
 
 Planned further functions
 """""""""""""""""""""
