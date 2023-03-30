@@ -7,7 +7,7 @@ in2xl
 About this project
 *******************************
 
-In the Python programming language, there exist various proficient tools to write data to XLSX format. Two of the most commonly used tools are XlsxWriter and Openpyxl. With these tools, one can conveniently create an Excel file or write data to an existing Excel file. However, there are some limitations to be aware of when using these tools. Specifically, XlsxWriter is capable of creating files but not modifying them, whereas Openpyxl can modify files but does not retain all formatting.
+In the Python programming language, there exist various proficient tools to write data to XLSX format. Two of the most commonly used tools are `XlsxWriter <https://pypi.org/project/XlsxWriter/>`_ and `openpyxl <https://pypi.org/project/openpyxl>`_. With these tools, one can conveniently create an Excel file or write data to an existing Excel file. However, there are some limitations to be aware of when using these tools. Specifically, `XlsxWriter <https://pypi.org/project/XlsxWriter/>`_ is capable of creating files but not modifying them, whereas `openpyxl <https://pypi.org/project/openpyxl>`_ can modify files but does not retain all formatting.
 
 In the data science domain, such limitations can pose challenges, especially if employees have significantly edited Excel files and only require updated data. To address this issue, in2xl offers a simplistic and efficient solution. This tool enables users to transfer data and data frames directly into an Excel file without affecting the existing formatting. Hence, in2xl can be a useful tool for data scientists seeking to update data in pre-existing Excel files.
 
@@ -24,13 +24,20 @@ Project dependencies installed by pip:
   pandas
   openpyxl
   ruamel.std.zipfile
-  xlsxwriter
+  XlsxWriter
 ::
 
 Usage
-*****************
+*****
 
+Open a Workbook
+***************
+
+..  code-block:: python
+    :linenos:
+
+    <h1>code block example</h1>
 
 
 Open a Workbook
-""""""""""""""""
+***************
