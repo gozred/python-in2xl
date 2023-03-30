@@ -32,6 +32,7 @@ class Workbook:
         temp (str): A string representing the temporary path where the Excel workbook is copied.
         wb (Element): An Element object representing the workbook.xml file.
         wb_dict (dict): A dictionary of worksheet names and their corresponding filenames.
+        sheetnames (list):  A list of the names of all sheetnames in the Excel workbook.
         wb_id_dict (dict): A dictionary of worksheet names and their corresponding sheet Ids.
         content (list): A list of all files and directories in the zip archive.
         chart_dict (dict): A dictionary of worksheet names and the corresponding chart filenames.
@@ -127,6 +128,8 @@ class Workbook:
                         else:
                             chart_dict[i] = [c]
 
+        self.sheetnames = list(wb_dict)
+
         return wb_dict, wb_id_dict, wb, content, chart_dict, wb_state
 
     def load_workbook(self, path: str = None) -> Worksheets:
@@ -175,6 +178,7 @@ class Worksheets():
         xmain (str): The XML namespace for main XML elements.
         xdsgn (str): The XML namespace for design XML elements.
         wb_dict (dict): A dictionary mapping worksheet names to their corresponding XML file names.
+        sheetnames (list):  A list of the names of all sheetnames in the Excel workbook.
         wb_id_dict (dict): A dictionary mapping worksheet names to their corresponding IDs.
         wb (etree._Element): The XML tree representing the workbook.
         wb_state (dict): A dictionary mapping worksheet names to their corresponding visibility states.
@@ -216,6 +220,7 @@ class Worksheets():
         self.wb = parent.wb
         self.wb_state = parent.wb_state
         self.content = parent.content
+        self.sheetnames = parent.sheetnames
         self.stree = None
         self.key = key
         if key is not None:

@@ -2,7 +2,7 @@
 from setuptools import setup
 import os
 
-VERSION = '0.1.11'
+VERSION = '0.1.12'
 DESCRIPTION = 'A package that allows to insert data in an XLSX file without changing the layout.'
 
 
