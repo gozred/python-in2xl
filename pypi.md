@@ -29,8 +29,13 @@ install it.
 
 Requirements: \>= Python 3.7
 
-Project dependencies installed by pip: :: lxml pandas openpyxl
-ruamel.std.zipfile XlsxWriter
+Project dependencies installed by pip:
+
+>     lxml
+>     pandas
+>     openpyxl
+>     ruamel.std.zipfile
+>     XlsxWriter
 
 ## Usage
 
@@ -80,7 +85,7 @@ print(wb.sheetnames)
 Different types of data can be inserted directly via `insert()`
 
 ``` python
-ws.insert(df,2,3, header=False)
+ws.insert(df, 2, 3, header=False)
 ```
 
 More detailed description of this function:
@@ -90,22 +95,22 @@ More detailed description of this function:
 > Parameters:
 >
 >
->     *data: Union(str, int, float, decimal, pd.DataFrame)*
+>     data: Union(str, int, float, decimal, pd.DataFrame)
 >
 >         Besides strings and real numbers, DataFrames can also be
 >         inserted directly.
 >
->     *row: int*
+>     row: int
 >
 >         The row in which the data is to be inserted. The default is
 >         the first row.
 >
->     *column: int*
+>     column: int
 >
 >         The column in which the data is to be inserted. The default is
 >         the first column.
 >
->     *axis: int*
+>     axis: int
 >
 >         Specify whether the data is inserted in the original
 >         orientation or a transposed direction. Default is 0
@@ -114,15 +119,15 @@ More detailed description of this function:
 >         1 : If the data is in a vertical orientation, it will be inserted
 >         horizontally.
 >
->     *header: bool*
+>     header: bool
 >
 >         True to include headers in the data, False otherwise. Default
->         is *True*.
+>         is True.
 >
->     **index: bool*
+>     index: bool
 >
 >         True to include index in the data, False otherwise. Defaults
->         to *False*.
+>         to False.
 
 ### Save & Close
 
