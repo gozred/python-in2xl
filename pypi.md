@@ -1,7 +1,5 @@
 # in2xl
 
-> Readme.rst is still under construction
-
 ## About this project
 
 In the Python programming language, there exist various proficient tools
@@ -85,48 +83,46 @@ Different types of data can be inserted directly via `insert()`
 ws.insert(df,2,3, header=False)
 ```
 
-More detailed description of the function:
+More detailed description of this function:
 
-\>\>\> insert(data: Union(str, int, float, pd.DataFrame), row: int = 1,
-column: int = 1, axis: int = 0, header: bool = True, index: bool =
-False)
+*insert(data, row=1, column=1, axis=0, header=True, index=False)*
 
 > Parameters:
 >
-> :
 >
->     **data: Union(str, int, float, decimal, pd.DataFrame)**
+>     *data: Union(str, int, float, decimal, pd.DataFrame)*
 >
->     :   Besides strings and real numbers, DataFrames can also be
+>         Besides strings and real numbers, DataFrames can also be
 >         inserted directly.
 >
->     **row: int**
+>     *row: int*
 >
->     :   The row in which the data is to be inserted. The default is
+>         The row in which the data is to be inserted. The default is
 >         the first row.
 >
->     **column: int**
+>     *column: int*
 >
->     :   The column in which the data is to be inserted. The default is
+>         The column in which the data is to be inserted. The default is
 >         the first column.
 >
->     **axis: int**
+>     *axis: int*
 >
->     :   Specify whether the data is inserted in the original
->         orientation or a transposed direction. Default is 0 0 : If the
->         data is in a vertical orientation, it will be inserted
->         vertically. 1 : If the data is in a vertical orientation, it
->         will be inserted horizontally.
+>         Specify whether the data is inserted in the original
+>         orientation or a transposed direction. Default is 0
+>         0 : If the data is in a vertical orientation, it will be inserted
+>         vertically.
+>         1 : If the data is in a vertical orientation, it will be inserted
+>         horizontally.
 >
->     **header: bool**
+>     *header: bool*
 >
->     :   True to include headers in the data, False otherwise. Default
->         is **True**.
+>         True to include headers in the data, False otherwise. Default
+>         is *True*.
 >
->     **index: bool**
+>     **index: bool*
 >
->     :   True to include index in the data, False otherwise. Defaults
->         to **False**.
+>         True to include index in the data, False otherwise. Defaults
+>         to *False*.
 
 ### Save & Close
 
@@ -149,9 +145,9 @@ files anyway, it is possible to hide these worksheets.
 print(wb.wb_state) # Returns the visibility status of all worksheets
 print(ws.state) # Returns the visibility status of the current worksheet
 
-ws.state = 0 # Sets the visibility status to visible
-ws.state = 1 # Sets the visibility status to hidden. User can make this worksheet visible again out of Excel via "Unhide".
-ws.state = 2 # Sets the visibility status to 'veryHidden'. User can't make this worksheet visible again out of Excel via "Unhide".
+ws.state = 0 # Sets the visibility status to 'visible'.
+ws.state = 1 # Sets the visibility status to 'hidden'. User can make this worksheet visible again out of Excel via "Unhide".
+ws.state = 2 # Sets the visibility status to 'veryHidden'. Worksheet is not visible under "Unhide" in Excel.
 ```
 
 ### Planned further functions

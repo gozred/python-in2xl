@@ -60,7 +60,7 @@ class Workbook:
         self.xchart = XCHART
         self.xdsgn = XDSGN
 
-        self.temp = None
+        self.temp = self._base = None
         self.wb = None
         self.wb_dict = self.wb_id_dict = self.wb = self.content = self.chart_dict = self.wb_state = None
 
@@ -154,6 +154,7 @@ class Workbook:
         tpath = os.path.dirname(path)
         dtime = datetime.now().strftime("%Y%m%d")
         tfile = f"~{dtime}_{os.path.basename(path)}.zip"
+        self._base = os.path.basename(path)
 
         self.temp = os.path.join(tpath, tfile)
 
@@ -223,9 +224,12 @@ class Worksheets():
         self.sheetnames = parent.sheetnames
         self.stree = None
         self.key = key
+        self._base = parent._base
+        self._repr = f"Workbook: {self._base}"
         if key is not None:
             self._state = self.wb_state[self.key]
             self.sheet = self.wb_dict[self.key]
+            self._repr = f"Workbook: {self._base} | Sheet: {key}"
         self.tree = None
         self.never = False
         self.check = (numbers.Real, decimal.Decimal)
@@ -239,6 +243,9 @@ class Worksheets():
             raise KeyError(f"the sheet [{key}] seems to be not included in this Excel workbook, possible sheets: {sl}")
 
         return self.__class__(parent=self, key=key)
+
+    def __repr__(self):
+        return self._repr
 
     @property
     def state(self) -> str:

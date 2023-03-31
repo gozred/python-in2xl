@@ -2,13 +2,14 @@
 from setuptools import setup
 import os
 
-VERSION = '0.1.14'
+VERSION = '0.2.0'
 DESCRIPTION = 'A package that allows to insert data in an XLSX file without changing the layout.'
 
 
 def read(fname):
     with open(os.path.join(os.path.dirname(__file__), fname), 'r') as file:
         return file.read()
+
 
 setup(
     name="in2xl",
