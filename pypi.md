@@ -128,6 +128,11 @@ More detailed description of this function:
 >
 >         True to include index in the data, False otherwise. Defaults
 >         to False.
+>
+>     ignore_nan:  bool
+>
+>         True to include nan-values in the data, False otherwise. Defaults
+>         to True.
 
 ### Save & Close
 

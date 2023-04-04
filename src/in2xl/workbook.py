@@ -371,8 +371,6 @@ class Worksheets():
                 return self
 
             srlist = [int(x.attrib['r']) for x in a_row]
-            # for i in a_row:
-            #    srlist.append(int(i.attrib['r']))
             min_n = min(srlist, key=lambda x: (abs(x - row), x))
             add_row = xml.find(f".//x:row[@r='{min_n}']", namespaces={'x': f'{self.xmain}'.strip('{}')})
             new_row = etree.Element(f'{self.xmain}row')
@@ -403,8 +401,8 @@ class Worksheets():
 
                 istext = ''
 
-                if isinstance(value, str):
-                    value = self.__change_strxml(value)
+                if isinstance(value, str) or (str(value).lower() == "nan"):
+                    value = self.__change_strxml(str(value))
                     istext = ' t="s"'
                     self.never = False
 
@@ -437,8 +435,8 @@ class Worksheets():
 
         istext = ''
 
-        if isinstance(value, str):
-            value = self.__change_strxml(value)
+        if isinstance(value, str) or (str(value).lower() == "nan"):
+            value = self.__change_strxml(str(value))
             istext = ' t="s"'
             self.never = False
 
@@ -453,6 +451,32 @@ class Worksheets():
             ws_column.append(etree.XML(f'<v>{value}</v>'))
         elif ws_value is not None:
             ws_value.text = str(value)
+
+        if ws_column.find(f"./{self.xmain}f") is not None:
+            self.__change_cchxml(f'{column}{row}')
+            fremove = ws_column.find(f"./{self.xmain}f")
+            fremove.getparent().remove(fremove)
+
+        return self
+
+    def __change_cchxml(self, id):
+        """
+        Find, add or changes the value of a specified XML tag within the calcChain.xml.
+
+        Args:
+            id (str): The value to change the XML tag to.
+
+        Returns:
+            self: The modified calcChain.xml
+
+        """
+
+        if self.chtree is None:
+            return self
+
+        cremove = self.chtree.xpath(f".//x:c[@i='{self.wb_id_dict[self.key]}' and @r='{id}']", namespaces={'x': f'{self.xmain}'.strip('{}')})[0]
+
+        cremove.getparent().remove(cremove)
 
         return self
 
@@ -522,6 +546,33 @@ class Worksheets():
             for c in parent.getchildren():
                 if c.tag == '{s}v'.format(s=self.xmain):
                     parent.remove(c)
+
+    def __get_cchxml(self):
+
+        """
+        Retrieves and parses the XML content from the 'xl/calcChain.xml' file in the Excel workbook.
+
+        Returns:
+            The instance of the class.
+
+        Raises:
+            KeyError: If 'xl/calcChain.xml' file is not found in the Excel workbook.
+
+        """
+
+        try:
+            with zipfile.ZipFile(self.temp, mode="r") as myzip:
+                with myzip.open('xl/calcChain.xml') as myfile:
+                    self.chtree = etree.fromstring(myfile.read())
+
+            zipfile.delete_from_zip_file(self.temp, file_names='xl/calcChain.xml')
+
+        except KeyError:
+            # if not exists this information is not needed
+            self.chtree = None
+            pass
+
+        return self
 
     def __get_strxml(self):
 
@@ -666,6 +717,24 @@ class Worksheets():
 
         return self
 
+    def __write_cchxml(self):
+
+        """
+        This method writes the calcChain.xml tree to the corresponding worksheet file within the Excel workbook file.
+
+        Returns:
+            Workbook: instance of the Workbook class.
+
+        """
+        if self.chtree is None:
+            return self
+
+        with zipfile.ZipFile(self.temp, mode="a") as myzip:
+            with myzip.open('xl/calcChain.xml', 'w') as myfile:
+                myfile.write(etree.tostring(self.chtree))
+
+        return self
+
     def __write_xml(self):
 
         """
@@ -715,7 +784,8 @@ class Worksheets():
                column: int = 1,
                axis: int = 0,
                header: bool = True,
-               index: bool = False
+               index: bool = False,
+               ignore_nan: bool = True
                ) -> None:
         """
         Insert data into the worksheet. Convert the input data into an array and pass it to the XML converter.
@@ -727,13 +797,14 @@ class Worksheets():
             axis (int, optional): 0 to insert data row-wise and 1 to insert data column-wise. Defaults to 0.
             header (bool, optional): True to include headers in the data, False otherwise. Defaults to True.
             index (bool, optional): True to include index in the data, False otherwise. Defaults to False.
-
+            ignore_nan (bool, optional): True to include nan-values in the data, False otherwise. Defaults to True.
         """
 
         column = column - 1
 
         self.__get_xml()
         self.__get_strxml()
+        self.__get_cchxml()
 
         if isinstance(data, pd.core.frame.DataFrame):
 
@@ -742,14 +813,18 @@ class Worksheets():
             if axis == 1:
                 for c_idx, _column in enumerate(dfr, column):  # (Startcolumn)
                     for r_idx, value in enumerate(_column, row):  # (Startrow)
-                        if (value is not None) and (str(value) != "nan"):
+                        if (value is not None) and (str(value) != "nan") and (ignore_nan):
+                            self.__change_xml(self.tree, r_idx, xl_name(c_idx), value)
+                        elif not ignore_nan:
                             self.__change_xml(self.tree, r_idx, xl_name(c_idx), value)
                         else:
                             pass
             else:
                 for r_idx, _row in enumerate(dfr, row):  # (Startrow)
                     for c_idx, value in enumerate(_row, column):  # (Startcolumn)
-                        if (value is not None) and (str(value) != "nan"):
+                        if (value is not None) and (str(value) != "nan") and (ignore_nan):
+                            self.__change_xml(self.tree, r_idx, xl_name(c_idx), value)
+                        elif not ignore_nan:
                             self.__change_xml(self.tree, r_idx, xl_name(c_idx), value)
                         else:
                             pass
@@ -760,6 +835,7 @@ class Worksheets():
         self.__clean_formula()
         self.__write_xml()
         self.__write_strxml()
+        self.__write_cchxml()
 
     def save(self, path: str = None) -> None:
         """

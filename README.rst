@@ -11,7 +11,7 @@ In the data science domain, such limitations can pose challenges, especially if 
 Table of Contents
 *****************
 
-.. contents:: 
+.. contents::
     :depth: 2
 
 Install
@@ -32,7 +32,7 @@ Project dependencies installed by pip:
 Usage
 *****
 
-The names of the functions are intentionally adapted to `openpyxl <https://pypi.org/project/openpyxl>`_ to make them easier to use and to adapt existing scripts. 
+The names of the functions are intentionally adapted to `openpyxl <https://pypi.org/project/openpyxl>`_ to make them easier to use and to adapt existing scripts.
 
 Open a Workbook
 """"""""""""""""
@@ -44,9 +44,9 @@ It is not possible to create new workbooks using in2xl. The intended approach is
 ..  code-block:: python
 
     from in2xl import Workbook
-    
+
     wb = Workbook().load_workbook(path)
-    
+
 
 But this method is also possible:
 
@@ -55,7 +55,7 @@ But this method is also possible:
 ..  code-block:: python
 
     import in2xl as ix
-    
+
     wb = ix.load_workbook(path)
 
 
@@ -63,9 +63,9 @@ Open a Worksheet
 """"""""""""""""
 
 ..  code-block:: python
- 
+
     ws = wb[sheetname]
-    
+
 
 Additionally you can check the names of all worksheets
 
@@ -80,37 +80,39 @@ Insert data
 Different types of data can be inserted directly via ``insert()``
 
 ..  code-block:: python
- 
+
     ws.insert(df,2,3, header=False)
 ..
 
 More detailed description of this function:
 
->>> insert(data, row=1, column=1, axis=0, header=True, index=False)
+>>> insert(data, row=1, column=1, axis=0, header=True, index=False, ignore_nan=True)
 
 
- Parameters: 
-   **data:   Union(str, int, float, decimal, pd.DataFrame)**
-             Besides strings and real numbers, DataFrames can also be inserted directly.
-   **row:    int**
-             The row in which the data is to be inserted. The default is the first row.
-   **column: int**
-             The column in which the data is to be inserted. The default is the first column.
-   **axis:   int**
-             Specify whether the data is inserted in the original orientation or a transposed direction. Default is 0 
-             0 : If the data is in a vertical orientation, it will be inserted vertically. 
-             1 : If the data is in a vertical orientation, it will be inserted horizontally.
-   **header: bool**
-             True to include headers in the data, False otherwise. Default is **True**.
-   **index:  bool**
-             True to include index in the data, False otherwise. Defaults to **False**.  
-             
+ Parameters:
+   **data:        Union(str, int, float, decimal, pd.DataFrame)**
+                  Besides strings and real numbers, DataFrames can also be inserted directly.
+   **row:         int**
+                  The row in which the data is to be inserted. The default is the first row.
+   **column:      int**
+                  The column in which the data is to be inserted. The default is the first column.
+   **axis:        int**
+                  Specify whether the data is inserted in the original orientation or a transposed direction. Default is 0
+                  0 : If the data is in a vertical orientation, it will be inserted vertically.
+                  1 : If the data is in a vertical orientation, it will be inserted horizontally.
+   **header:      bool**
+                  True to include headers in the data, False otherwise. Default is **True**.
+   **index:       bool**
+                  True to include index in the data, False otherwise. Defaults to **False**.
+   **ignore_nan:  bool**
+                  True to include nan-values in the data, False otherwise. Defaults to **True**.
+
 
 Save & Close
 """""""""""""
 
 ..  code-block:: python
- 
+
     ws.save(path)
     ws.close()
 
@@ -120,13 +122,13 @@ The file can be saved multiple times (under different names). As long as the fil
 Additional functions
 """""""""""""""""""""
 
-Template files are sometimes created for multiple tasks/situations. Not all worksheets are always necessary for this. To be able to use these files anyway, it is possible to hide these worksheets. 
+Template files are sometimes created for multiple tasks/situations. Not all worksheets are always necessary for this. To be able to use these files anyway, it is possible to hide these worksheets.
 
 ..  code-block:: python
-   
+
    print(wb.wb_state) # Returns the visibility status of all worksheets
    print(ws.state) # Returns the visibility status of the current worksheet
-   
+
    ws.state = 0 # Sets the visibility status to 'visible'.
    ws.state = 1 # Sets the visibility status to 'hidden'. User can make this worksheet visible again out of Excel via "Unhide".
    ws.state = 2 # Sets the visibility status to 'veryHidden'. Worksheet is not visible under "Unhide" in Excel.
